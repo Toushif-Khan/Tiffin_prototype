@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tiffn. — Office lunch, sorted.</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700;9..144,900&family=Manrope:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --ink:#232323;
+  --ink-soft:#5b5952;
+  --ivory:#FAF6EE;
+  --ivory-2:#F2ECDD;
+  --leaf:#1F4D3A;
+  --leaf-2:#173B2C;
+  --leaf-tint:#E9F0E7;
+  --turmeric:#E8873D;
+  --turmeric-dark:#C96A24;
+  --clay:#B75B39;
+  --sage:#8FA792;
+  --line:#DDD5C2;
+  --white:#FFFFFF;
+
+  --display:'Fraunces', serif;
+  --body:'Manrope', sans-serif;
+  --mono:'IBM Plex Mono', monospace;
+
+  --sp-1:4px; --sp-2:8px; --sp-3:12px; --sp-4:16px; --sp-5:24px;
+  --sp-6:32px; --sp-7:48px; --sp-8:64px; --sp-9:96px; --sp-10:140px;
+
+  --radius-s:10px; --radius-m:20px; --radius-l:32px; --radius-pill:999px;
+  --shadow-s: 0 2px 10px rgba(35,35,35,0.06);
+  --shadow-m: 0 12px 32px rgba(31,77,58,0.12);
+  --shadow-l: 0 24px 60px rgba(31,77,58,0.16);
+  --ease: cubic-bezier(.16,.84,.44,1);
+}
+
+*{box-sizing:border-box; margin:0; padding:0;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:var(--body);
+  color:var(--ink);
+  background:var(--ivory);
+  line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+img,svg{display:block; max-width:100%;}
+a{color:inherit; text-decoration:none;}
+ul{list-style:none;}
+button{font-family:inherit; cursor:pointer; border:none; background:none;}
+
+@media (prefers-reduced-motion: reduce){
+  *{animation-duration:0.001ms !important; animation-iteration-count:1 !important; transition-duration:0.001ms !important; scroll-behavior:auto !important;}
+}
+
+:focus-visible{
+  outline:2.5px solid var(--turmeric);
+  outline-offset:3px;
+  border-radius:4px;
+}
+
+.wrap{
+  max-width:1240px;
+  margin:0 auto;
+  padding:0 var(--sp-6);
+}
+@media (max-width:640px){ .wrap{padding:0 var(--sp-5);} }
+
+.eyebrow{
+  font-family:var(--mono);
+  font-size:12.5px;
+  letter-spacing:0.14em;
+  text-transform:uppercase;
+  color:var(--turmeric-dark);
+  font-weight:600;
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  margin-bottom:var(--sp-4);
+}
+.eyebrow::before{
+  content:"";
+  width:16px; height:1.5px;
+  background:var(--turmeric-dark);
+  display:inline-block;
+}
+
+h1,h2,h3,h4{
+  font-family:var(--display);
+  font-weight:600;
+  letter-spacing:-0.01em;
+  color:var(--leaf-2);
+  line-height:1.08;
+}
+h2{ font-size:clamp(30px,4vw,46px); font-weight:600;}
+h3{ font-size:22px; font-weight:600; }
+p{ color:var(--ink-soft); }
+
+.section{ padding:var(--sp-10) 0; position:relative;}
+@media (max-width:900px){ .section{ padding:var(--sp-8) 0; } }
+
+.section-head{
+  max-width:640px;
+  margin-bottom:var(--sp-8);
+}
+.section-head.center{ margin-left:auto; margin-right:auto; text-align:center; }
+.section-head p{ font-size:17px; }
+
+
+.btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  padding:14px 26px;
+  border-radius:var(--radius-pill);
+  font-weight:700;
+  font-size:15px;
+  transition: transform .25s var(--ease), box-shadow .25s var(--ease), background .25s var(--ease);
+  white-space:nowrap;
+}
+.btn-primary{
+  background:var(--turmeric);
+  color:var(--white);
+  box-shadow:0 8px 20px rgba(232,135,61,0.35);
+}
+.btn-primary:hover{ background:var(--turmeric-dark); transform:translateY(-2px); box-shadow:0 12px 26px rgba(232,135,61,0.4);}
+.btn-dark{
+  background:var(--leaf);
+  color:var(--ivory);
+}
+.btn-dark:hover{ background:var(--leaf-2); transform:translateY(-2px); }
+.btn-ghost{
+  background:transparent;
+  color:var(--leaf-2);
+  border:1.5px solid var(--line);
+}
+.btn-ghost:hover{ border-color:var(--leaf); background:var(--leaf-tint); }
+.btn-ghost-light{
+  background:transparent;
+  color:var(--ivory);
+  border:1.5px solid rgba(250,246,238,0.35);
+}
+.btn-ghost-light:hover{ background:rgba(250,246,238,0.1); border-color:var(--ivory); }
+
+
+.reveal{ opacity:0; transform:translateY(22px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
+.reveal.in{ opacity:1; transform:translateY(0); }
+
+
+header{
+  position:sticky; top:0; z-index:100;
+  background:rgba(250,246,238,0.86);
+  backdrop-filter:blur(12px);
+  border-bottom:1px solid transparent;
+  transition:border-color .3s, box-shadow .3s;
+}
+header.scrolled{ border-color:var(--line); box-shadow:0 4px 20px rgba(35,35,35,0.05); }
+nav{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:18px 0;
+}
+.logo{ display:flex; align-items:center; gap:10px; }
+.logo-word{ font-family:var(--display); font-weight:700; font-size:23px; color:var(--leaf-2); }
+.logo-word .dot{ color:var(--turmeric); }
+
+.nav-links{ display:flex; align-items:center; gap:var(--sp-7); }
+.nav-links a{
+  font-size:14.5px; font-weight:600; color:var(--ink-soft);
+  position:relative; padding:4px 0;
+  transition:color .2s;
+}
+.nav-links a::after{
+  content:""; position:absolute; left:0; bottom:-2px; width:0; height:2px;
+  background:var(--turmeric); transition:width .25s var(--ease);
+}
+.nav-links a:hover{ color:var(--leaf-2); }
+.nav-links a:hover::after{ width:100%; }
+
+.nav-cta{ display:flex; align-items:center; gap:var(--sp-5); }
+.nav-cta .btn{ padding:11px 22px; font-size:14px; }
+.burger{ display:none; width:26px; height:20px; position:relative; flex-direction:column; justify-content:space-between; }
+.burger span{ display:block; height:2px; background:var(--leaf-2); border-radius:2px; transition:.3s; }
+
+@media (max-width:900px){
+  .nav-links{ display:none; }
+  .nav-cta .btn-ghost{ display:none; }
+  .burger{ display:flex; }
+}
+
+
+.mobile-menu{
+  display:none; flex-direction:column; gap:2px;
+  background:var(--ivory); border-top:1px solid var(--line);
+  padding:var(--sp-4) var(--sp-5) var(--sp-6);
+}
+.mobile-menu.open{ display:flex; }
+.mobile-menu a{ padding:14px 4px; font-weight:700; color:var(--leaf-2); border-bottom:1px solid var(--line); font-size:16px; }
+.mobile-menu .btn{ margin-top:var(--sp-4); width:100%; }
+
+
+.hero{
+  position:relative;
+  padding:var(--sp-9) 0 var(--sp-8);
+  overflow:hidden;
+}
+.hero .wrap{
+  display:grid; grid-template-columns:1.05fr 0.95fr; gap:var(--sp-8); align-items:center;
+}
+.hero-copy h1{ font-size:clamp(38px,5.4vw,64px); margin-bottom:var(--sp-5); }
+.hero-copy h1 em{ font-style:normal; color:var(--turmeric); }
+.hero-copy p.lead{ font-size:18.5px; max-width:480px; margin-bottom:var(--sp-6); }
+.hero-actions{ display:flex; gap:var(--sp-4); flex-wrap:wrap; margin-bottom:var(--sp-8); }
+
+.trust-row{ display:flex; gap:var(--sp-8); flex-wrap:wrap; }
+.trust-item .num{ font-family:var(--mono); font-size:24px; font-weight:600; color:var(--leaf-2); }
+.trust-item .lab{ font-size:12.5px; color:var(--ink-soft); text-transform:uppercase; letter-spacing:.06em; margin-top:2px;}
+
+.hero-visual{ position:relative; display:flex; align-items:center; justify-content:center; }
+.hero-visual svg{ width:100%; max-width:460px; }
+.blob{ position:absolute; inset:0; z-index:-1; }
+
+@keyframes float{ 0%,100%{ transform:translateY(0);} 50%{ transform:translateY(-14px);} }
+@keyframes steam{ 0%{ opacity:0; transform:translateY(4px) scaleY(.8);} 30%{opacity:.65;} 100%{ opacity:0; transform:translateY(-26px) scaleY(1.15);} }
+.tiffin-float{ animation:float 5s ease-in-out infinite; }
+.steam-path{ transform-origin:center bottom; animation:steam 3.2s ease-in-out infinite; }
+.steam-path:nth-child(2){ animation-delay:.9s; }
+.steam-path:nth-child(3){ animation-delay:1.8s; }
+
+@media (max-width:900px){
+  .hero .wrap{ grid-template-columns:1fr; }
+  .hero-visual{ order:-1; margin-bottom:var(--sp-5); }
+  .hero-visual svg{ max-width:300px; }
+  .trust-row{ gap:var(--sp-6); }
+}
+
+
+.strip{
+  background:var(--leaf);
+  color:var(--ivory);
+  padding:14px 0;
+  overflow:hidden;
+  white-space:nowrap;
+}
+.strip-track{ display:inline-flex; gap:48px; animation:scroll-left 26s linear infinite; }
+.strip-track span{ font-family:var(--mono); font-size:13px; letter-spacing:.05em; opacity:.9; }
+@keyframes scroll-left{ from{ transform:translateX(0);} to{ transform:translateX(-50%);} }
+
+
+.usp-grid{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:var(--sp-5);
+}
+@media (max-width:900px){ .usp-grid{ grid-template-columns:repeat(2,1fr);} }
+@media (max-width:600px){ .usp-grid{ grid-template-columns:1fr;} }
+
+.usp-card{
+  background:var(--white);
+  border:1px solid var(--line);
+  border-radius:var(--radius-m);
+  padding:var(--sp-6);
+  position:relative;
+  transition:transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s;
+}
+.usp-card::before{
+  content:"";
+  position:absolute; top:0; left:var(--sp-6); right:var(--sp-6); height:4px;
+  background:var(--turmeric); border-radius:0 0 6px 6px;
+  transform:scaleX(0); transform-origin:left; transition:transform .35s var(--ease);
+}
+.usp-card:hover{ transform:translateY(-6px); box-shadow:var(--shadow-m); border-color:transparent; }
+.usp-card:hover::before{ transform:scaleX(1); }
+.usp-icon{
+  width:48px; height:48px; border-radius:14px; background:var(--leaf-tint);
+  display:flex; align-items:center; justify-content:center; margin-bottom:var(--sp-5);
+}
+.usp-icon svg{ width:24px; height:24px; }
+.usp-card h3{ margin-bottom:8px; font-size:19px; }
+.usp-card p{ font-size:14.5px; }
+
+
+.how{ background:var(--leaf-2); color:var(--ivory); }
+.how .section-head h2{ color:var(--ivory); }
+.how .section-head p{ color:rgba(250,246,238,0.72); }
+.how .eyebrow{ color:var(--turmeric); }
+.how .eyebrow::before{ background:var(--turmeric); }
+
+.tier-stack{ display:flex; flex-direction:column; gap:0; max-width:820px; margin:0 auto; }
+.tier{
+  display:grid; grid-template-columns:90px 1fr; align-items:center; gap:var(--sp-6);
+  padding:var(--sp-6) var(--sp-5);
+  border-bottom:1px solid rgba(250,246,238,0.14);
+  transition:padding-left .3s var(--ease);
+}
+.tier:last-child{ border-bottom:none; }
+.tier:hover{ padding-left:var(--sp-6); }
+.tier-num{
+  font-family:var(--mono); font-size:15px; color:var(--turmeric);
+  border:1.5px solid rgba(232,135,61,0.4); border-radius:var(--radius-pill);
+  width:64px; height:64px; display:flex; align-items:center; justify-content:center;
+  font-weight:600;
+}
+.tier-body h3{ color:var(--ivory); margin-bottom:6px; }
+.tier-body p{ color:rgba(250,246,238,0.68); font-size:15px; max-width:520px; }
+
+@media (max-width:640px){
+  .tier{ grid-template-columns:56px 1fr; gap:var(--sp-4); padding:var(--sp-5) var(--sp-2);}
+  .tier-num{ width:48px; height:48px; font-size:13px; }
+}
+
+
+.plans-grid{
+  display:grid; grid-template-columns:repeat(3,1fr); gap:var(--sp-5); align-items:stretch;
+}
+@media (max-width:940px){ .plans-grid{ grid-template-columns:1fr; max-width:420px; margin:0 auto;} }
+
+.plan-card{
+  background:var(--white); border:1px solid var(--line); border-radius:var(--radius-l);
+  padding:var(--sp-7) var(--sp-6); display:flex; flex-direction:column;
+  position:relative; transition:transform .35s var(--ease), box-shadow .35s var(--ease);
+}
+.plan-card:hover{ transform:translateY(-8px); box-shadow:var(--shadow-l); }
+.plan-card.featured{ background:var(--leaf); color:var(--ivory); border-color:var(--leaf); }
+.plan-card.featured h3, .plan-card.featured .plan-tag{ color:var(--ivory); }
+.plan-card.featured .price-num{ color:var(--ivory); }
+.plan-card.featured p{ color:rgba(250,246,238,0.72); }
+.plan-card.featured .plan-feat li{ border-color:rgba(250,246,238,0.16); color:rgba(250,246,238,0.9); }
+.plan-card.featured .check{ color:var(--turmeric); }
+
+.badge{
+  position:absolute; top:-14px; right:28px;
+  background:var(--turmeric); color:var(--white);
+  font-family:var(--mono); font-size:11.5px; font-weight:600; letter-spacing:.05em;
+  padding:6px 14px; border-radius:var(--radius-pill); text-transform:uppercase;
+}
+.plan-tag{ font-family:var(--mono); font-size:12px; letter-spacing:.08em; text-transform:uppercase; color:var(--sage); font-weight:600; margin-bottom:10px; }
+.plan-card h3{ font-size:24px; margin-bottom:14px; }
+.price-row{ display:flex; align-items:baseline; gap:6px; margin-bottom:var(--sp-2); }
+.price-num{ font-family:var(--display); font-size:38px; font-weight:600; color:var(--leaf-2); }
+.price-cycle{ font-size:14px; color:var(--ink-soft); }
+.plan-card.featured .price-cycle{ color:rgba(250,246,238,0.65); }
+.price-per{ font-size:13px; color:var(--sage); margin-bottom:var(--sp-6); font-family:var(--mono); }
+
+.plan-feat{ margin-bottom:var(--sp-7); flex:1; }
+.plan-feat li{
+  display:flex; align-items:flex-start; gap:10px; padding:11px 0;
+  border-bottom:1px dashed var(--line); font-size:14.5px; color:var(--ink-soft);
+}
+.plan-feat li:last-child{ border-bottom:none; }
+.check{ color:var(--leaf); flex-shrink:0; margin-top:2px; }
+.plan-card .btn{ width:100%; }
+
+.trial-banner{
+  margin-top:var(--sp-8);
+  background:var(--ivory-2); border:1.5px dashed var(--turmeric-dark);
+  border-radius:var(--radius-l);
+  padding:var(--sp-7); display:flex; align-items:center; justify-content:space-between; gap:var(--sp-6); flex-wrap:wrap;
+}
+.trial-banner .trial-text h3{ margin-bottom:6px; }
+.trial-price{ font-family:var(--mono); font-weight:600; color:var(--turmeric-dark); }
+
+
+.delivery-grid{ display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-5); }
+@media (max-width:700px){ .delivery-grid{ grid-template-columns:1fr; } }
+.time-card{
+  background:var(--leaf-tint); border-radius:var(--radius-l); padding:var(--sp-7);
+  display:flex; align-items:center; gap:var(--sp-6);
+  border:1px solid transparent; transition:border-color .3s, background .3s;
+}
+.time-card:hover{ border-color:var(--leaf); background:#E2EEE0; }
+.time-icon{ width:64px; height:64px; border-radius:18px; background:var(--white); display:flex; align-items:center; justify-content:center; flex-shrink:0; box-shadow:var(--shadow-s); }
+.time-icon svg{ width:30px; height:30px; }
+.time-label{ font-family:var(--mono); text-transform:uppercase; font-size:12px; letter-spacing:.08em; color:var(--turmeric-dark); font-weight:600; margin-bottom:4px;}
+.time-range{ font-family:var(--display); font-size:26px; font-weight:600; color:var(--leaf-2); }
+
+
+.pack{ background:var(--leaf-2); color:var(--ivory); overflow:hidden; }
+.pack .wrap{ display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-8); align-items:center; }
+.pack-copy .eyebrow{ color:var(--turmeric); }
+.pack-copy .eyebrow::before{ background:var(--turmeric); }
+.pack-copy h2{ color:var(--ivory); margin-bottom:var(--sp-5); }
+.pack-copy p{ color:rgba(250,246,238,0.75); font-size:17px; margin-bottom:var(--sp-5); }
+.pack-compare{ display:flex; flex-direction:column; gap:var(--sp-3); margin-top:var(--sp-6); }
+.compare-row{ display:flex; align-items:center; gap:14px; font-size:14.5px; }
+.compare-row.bad{ color:rgba(250,246,238,0.5); text-decoration:line-through; text-decoration-color:var(--clay); }
+.compare-row.good{ color:var(--ivory); font-weight:600; }
+.dot-x{ width:20px; height:20px; border-radius:50%; background:rgba(183,91,57,0.25); color:#e29c85; display:flex; align-items:center; justify-content:center; font-size:12px; flex-shrink:0;}
+.dot-check{ width:20px; height:20px; border-radius:50%; background:rgba(232,135,61,0.2); color:var(--turmeric); display:flex; align-items:center; justify-content:center; font-size:12px; flex-shrink:0;}
+@media (max-width:900px){ .pack .wrap{ grid-template-columns:1fr; } .pack-visual{ order:-1;} }
+
+
+.testi-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:var(--sp-5); }
+@media (max-width:900px){ .testi-grid{ grid-template-columns:1fr; } }
+.testi-card{
+  background:var(--white); border:1px solid var(--line); border-radius:var(--radius-m);
+  padding:var(--sp-6); display:flex; flex-direction:column; gap:var(--sp-5);
+}
+.stars{ color:var(--turmeric); font-size:14px; letter-spacing:2px; }
+.testi-card p.quote{ font-size:15.5px; color:var(--ink); font-family:var(--display); font-weight:400; font-size:18px; line-height:1.45; }
+.testi-person{ display:flex; align-items:center; gap:12px; margin-top:auto; }
+.avatar{
+  width:42px; height:42px; border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-family:var(--display); font-weight:600; color:var(--white); font-size:15px;
+}
+.testi-person .who b{ display:block; font-size:14px; color:var(--leaf-2); }
+.testi-person .who span{ font-size:12.5px; color:var(--ink-soft); }
+
+
+.faq-list{ max-width:760px; margin:0 auto; }
+.faq-item{ border-bottom:1px solid var(--line); }
+.faq-q{
+  width:100%; display:flex; align-items:center; justify-content:space-between;
+  padding:var(--sp-5) 4px; font-family:var(--display); font-size:18px; font-weight:600; color:var(--leaf-2);
+  text-align:left; gap:var(--sp-5);
+}
+.faq-q .plus{ font-family:var(--mono); font-size:20px; color:var(--turmeric); transition:transform .3s var(--ease); flex-shrink:0; }
+.faq-item.open .faq-q .plus{ transform:rotate(45deg); }
+.faq-a{ max-height:0; overflow:hidden; transition:max-height .4s var(--ease); }
+.faq-a p{ padding:0 4px var(--sp-5); font-size:15px; max-width:640px; }
+.faq-item.open .faq-a{ max-height:200px; }
+
+
+.contact{ background:var(--leaf-tint); }
+.contact .wrap{ display:grid; grid-template-columns:1fr 1fr; gap:var(--sp-8); }
+@media (max-width:900px){ .contact .wrap{ grid-template-columns:1fr; } }
+.contact-cards{ display:flex; flex-direction:column; gap:var(--sp-4); }
+.contact-card{
+  background:var(--white); border-radius:var(--radius-m); padding:var(--sp-6);
+  display:flex; align-items:center; gap:var(--sp-5); box-shadow:var(--shadow-s);
+  transition:transform .25s var(--ease);
+}
+.contact-card:hover{ transform:translateX(6px); }
+.contact-card .cico{ width:52px; height:52px; border-radius:14px; display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+.contact-card .cico svg{ width:24px; height:24px;}
+.wa-ico{ background:#DDF0DF; color:#1F9D55; }
+.ph-ico{ background:#FCE3D0; color:var(--turmeric-dark); }
+.contact-card b{ display:block; color:var(--leaf-2); font-size:15.5px; margin-bottom:2px;}
+.contact-card span{ font-size:13.5px; color:var(--ink-soft); }
+
+.contact-form{ background:var(--white); border-radius:var(--radius-l); padding:var(--sp-7); box-shadow:var(--shadow-s); }
+.form-row{ display:flex; flex-direction:column; gap:6px; margin-bottom:var(--sp-4); }
+.form-row label{ font-size:13px; font-weight:700; color:var(--leaf-2); }
+.form-row input, .form-row textarea{
+  border:1.5px solid var(--line); border-radius:var(--radius-s); padding:12px 14px;
+  font-family:var(--body); font-size:14.5px; background:var(--ivory); transition:border-color .2s;
+}
+.form-row input:focus, .form-row textarea:focus{ outline:none; border-color:var(--leaf); }
+.contact-form .btn{ width:100%; margin-top:var(--sp-2); }
+
+
+footer{ background:var(--leaf-2); color:rgba(250,246,238,0.75); padding:var(--sp-8) 0 var(--sp-6); }
+.foot-top{ display:grid; grid-template-columns:1.4fr 1fr 1fr 1fr; gap:var(--sp-7); padding-bottom:var(--sp-7); border-bottom:1px solid rgba(250,246,238,0.12); }
+@media (max-width:800px){ .foot-top{ grid-template-columns:1fr 1fr; } }
+.foot-brand p{ color:rgba(250,246,238,0.6); font-size:14px; margin-top:var(--sp-3); max-width:260px; }
+.foot-col h4{ color:var(--ivory); font-family:var(--body); font-size:13px; text-transform:uppercase; letter-spacing:.08em; margin-bottom:var(--sp-4); }
+.foot-col a{ display:block; font-size:14.5px; padding:6px 0; color:rgba(250,246,238,0.7); transition:color .2s; }
+.foot-col a:hover{ color:var(--turmeric); }
+.foot-bottom{ display:flex; align-items:center; justify-content:space-between; padding-top:var(--sp-6); flex-wrap:wrap; gap:var(--sp-4); }
+.foot-bottom span{ font-size:13px; color:rgba(250,246,238,0.5); }
+.socials{ display:flex; gap:12px; }
+.socials a{ width:36px; height:36px; border-radius:50%; border:1px solid rgba(250,246,238,0.25); display:flex; align-items:center; justify-content:center; transition:.25s; }
+.socials a:hover{ background:var(--turmeric); border-color:var(--turmeric); }
+.socials svg{ width:16px; height:16px; }
+
+
+.wa-float{
+  position:fixed; bottom:24px; right:24px; z-index:90;
+  width:58px; height:58px; border-radius:50%; background:#25D366;
+  display:flex; align-items:center; justify-content:center; box-shadow:0 10px 28px rgba(37,211,102,0.45);
+  transition:transform .25s var(--ease);
+}
+.wa-float:hover{ transform:scale(1.08); }
+.wa-float svg{ width:28px; height:28px; }
+</style>
+</head>
+<body>
+
+
+<header id="siteHeader">
+  <div class="wrap">
+    <nav>
+      <a href="#top" class="logo" aria-label="Tiffn. home">
+        <svg width="34" height="34" viewBox="0 0 40 40" fill="none">
+          <rect x="9" y="20" width="22" height="12" rx="4" fill="#1F4D3A"/>
+          <rect x="11" y="13" width="18" height="9" rx="3.5" fill="#E8873D"/>
+          <rect x="13" y="7" width="14" height="8" rx="3" fill="#1F4D3A"/>
+          <rect x="18" y="3" width="4" height="5" rx="1.5" fill="#8FA792"/>
+        </svg>
+        <span class="logo-word">Tiffn<span class="dot">.</span></span>
+      </a>
+      <ul class="nav-links">
+        <li><a href="#usp">Why Tiffn</a></li>
+        <li><a href="#plans">Plans</a></li>
+        <li><a href="#how">How it works</a></li>
+        <li><a href="#faq">FAQ</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+      <div class="nav-cta">
+        <a href="#contact" class="btn btn-ghost">Get in touch</a>
+        <a href="#plans" class="btn btn-primary">Start ₹250 Trial</a>
+        <button class="burger" id="burgerBtn" aria-label="Open menu" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </nav>
+  </div>
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="#usp">Why Tiffn</a>
+    <a href="#plans">Plans</a>
+    <a href="#how">How it works</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Contact</a>
+    <a href="#plans" class="btn btn-primary">Start ₹250 Trial</a>
+  </div>
+</header>
+
+<main id="top">
+
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-copy">
+      <p class="eyebrow">Subscription tiffin, for the workday</p>
+      <h1>Lunch that shows up <em>for you.</em></h1>
+      <p class="lead">Home-style meals, cooked fresh each morning with little to no oil, delivered hot to your desk before your 1 o'clock meeting. No apps to order from — just a plan that runs itself.</p>
+      <div class="hero-actions">
+        <a href="#plans" class="btn btn-primary">Try a meal for ₹250</a>
+        <a href="#how" class="btn btn-ghost">See how it works</a>
+      </div>
+      <div class="trust-row">
+        <div class="trust-item"><div class="num">12k+</div><div class="lab">Meals / week</div></div>
+        <div class="trust-item"><div class="num">&lt;5g</div><div class="lab">Oil per meal</div></div>
+        <div class="trust-item"><div class="num">98%</div><div class="lab">On-time delivery</div></div>
+        <div class="trust-item"><div class="num">4.8★</div><div class="lab">Subscriber rating</div></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <svg viewBox="0 0 420 460" class="tiffin-float">
+        <ellipse cx="210" cy="420" rx="130" ry="18" fill="#1F4D3A" opacity="0.08"/>
+        
+        <g class="steam-group">
+          <path class="steam-path" d="M160 90 C150 70, 175 55, 165 30" stroke="#8FA792" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <path class="steam-path" d="M205 85 C195 65, 220 50, 210 25" stroke="#8FA792" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <path class="steam-path" d="M250 90 C240 70, 265 55, 255 30" stroke="#8FA792" stroke-width="4" stroke-linecap="round" fill="none"/>
+        </g>
+        
+        <rect x="95" y="330" width="230" height="80" rx="18" fill="#1F4D3A"/>
+        <rect x="95" y="325" width="230" height="18" rx="9" fill="#173B2C"/>
+        <rect x="115" y="245" width="190" height="90" rx="16" fill="#E8873D"/>
+        <rect x="115" y="240" width="190" height="16" rx="8" fill="#C96A24"/>
+        <rect x="135" y="150" width="150" height="95" rx="16" fill="#1F4D3A"/>
+        <rect x="135" y="145" width="150" height="16" rx="8" fill="#173B2C"/>
+        <rect x="150" y="110" width="120" height="40" rx="14" fill="#FAF6EE" stroke="#DDD5C2" stroke-width="2"/>
+        <circle cx="210" cy="105" r="8" fill="#8FA792"/>
+        <rect x="196" y="90" width="28" height="16" rx="6" fill="#8FA792"/>
+        
+        <path d="M175 95 Q210 55 245 95" stroke="#1F4D3A" stroke-width="7" fill="none" stroke-linecap="round"/>
+        
+        <path d="M330 210 Q360 190 350 155 Q315 165 320 200 Q322 208 330 210Z" fill="#8FA792"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+
+<div class="strip">
+  <div class="strip-track">
+    <span>ZERO ADDED PLASTIC · COOKED FRESH DAILY · MINIMAL OIL · HYGIENIC KITCHENS · PAUSE ANYTIME · DELIVERED TO YOUR DESK ·</span>
+    <span>ZERO ADDED PLASTIC · COOKED FRESH DAILY · MINIMAL OIL · HYGIENIC KITCHENS · PAUSE ANYTIME · DELIVERED TO YOUR DESK ·</span>
+  </div>
+</div>
+
+
+<section class="section" id="usp">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Why Tiffn</p>
+      <h2>Everything a desk lunch should be, nothing it usually is.</h2>
+    </div>
+    <div class="usp-grid">
+      <div class="usp-card reveal">
+        <div class="usp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1F4D3A" stroke-width="1.8"><path d="M12 2v6M9 4l3-2 3 2M4 14c0 5 3.5 8 8 8s8-3 8-8H4Z"/></svg></div>
+        <h3>Cooked fresh, every morning</h3>
+        <p>No batch-cooked or frozen meals — every tiffin is prepared the same day it's delivered.</p>
+      </div>
+      <div class="usp-card reveal">
+        <div class="usp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1F4D3A" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+        <h3>Little to no oil</h3>
+        <p>Our chefs cook with under 5g of oil per meal on average, without cutting flavour.</p>
+      </div>
+      <div class="usp-card reveal">
+        <div class="usp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1F4D3A" stroke-width="1.8"><path d="M12 21s-7-5.5-7-11a7 7 0 0 1 14 0c0 5.5-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+        <h3>Hygienic, audited kitchens</h3>
+        <p>Every kitchen follows FSSAI-grade hygiene protocols and daily quality checks.</p>
+      </div>
+      <div class="usp-card reveal">
+        <div class="usp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1F4D3A" stroke-width="1.8"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M8 4v-1M16 4v-1"/></svg></div>
+        <h3>Set it once, forget it</h3>
+        <p>One monthly subscription. Pause, skip a day, or swap your plan in a couple of taps.</p>
+      </div>
+      <div class="usp-card reveal">
+        <div class="usp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1F4D3A" stroke-width="1.8"><path d="M4 21c4-1 6-4 6-8V7l-6 3v3c0 4 0 7-0 8Z"/><path d="M20 21c-4-1-6-4-6-8V7l6 3v3c0 4 0 7 0 8Z"/></svg></div>
+        <h3>Food-safe, sustainable packaging</h3>
+        <p>No hot food sitting in plastic. Our containers are designed to keep meals fresher and safer.</p>
+      </div>
+      <div class="usp-card reveal">
+        <div class="usp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1F4D3A" stroke-width="1.8"><path d="M12 3l2.4 5.5L20 9l-4.4 3.8L17 19l-5-3.2L7 19l1.4-6.2L4 9l5.6-.5L12 3Z"/></svg></div>
+        <h3>Ingredients you can trust</h3>
+        <p>Locally sourced produce, no preservatives, and a nutritionist-reviewed menu each week.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section how" id="how">
+  <div class="wrap">
+    <div class="section-head center reveal" style="margin-left:auto;margin-right:auto;">
+      <p class="eyebrow" style="justify-content:center;">How it works</p>
+      <h2>From kitchen to your desk in four steps.</h2>
+    </div>
+    <div class="tier-stack">
+      <div class="tier reveal">
+        <div class="tier-num">01</div>
+        <div class="tier-body"><h3>Pick your plan</h3><p>Choose Veg, Non-Veg or Protein — or start with a ₹250 trial meal to taste it first.</p></div>
+      </div>
+      <div class="tier reveal">
+        <div class="tier-num">02</div>
+        <div class="tier-body"><h3>We cook it that morning</h3><p>Our kitchen preps and cooks your meal fresh, hours before it reaches you — never the day before.</p></div>
+      </div>
+      <div class="tier reveal">
+        <div class="tier-num">03</div>
+        <div class="tier-body"><h3>Delivered hot, on time</h3><p>Meals arrive in sealed, eco-friendly packaging within your lunch or dinner delivery window.</p></div>
+      </div>
+      <div class="tier reveal">
+        <div class="tier-num">04</div>
+        <div class="tier-body"><h3>Pause or swap anytime</h3><p>Travelling or working from home? Pause a day or change your plan from your account — no calls needed.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="plans">
+  <div class="wrap">
+    <div class="section-head center reveal" style="margin-left:auto;margin-right:auto;">
+      <p class="eyebrow" style="justify-content:center;">Subscription plans</p>
+      <h2>One monthly plan. Zero lunch decisions.</h2>
+      <p>All plans include lunch delivery on working days. Add dinner delivery to any plan at checkout.</p>
+    </div>
+
+    <div class="plans-grid">
+      <div class="plan-card reveal">
+        <div class="plan-tag">For plant-based eaters</div>
+        <h3>Veg Plan</h3>
+        <div class="price-row"><span class="price-num">₹6,500</span><span class="price-cycle">/ month</span></div>
+        <div class="price-per">≈ ₹295 per meal</div>
+        <ul class="plan-feat">
+          <li><span class="check">✓</span> 22 lunches a month, weekdays</li>
+          <li><span class="check">✓</span> Rotating regional thali-style menu</li>
+          <li><span class="check">✓</span> Cooked in &lt;5g oil per meal</li>
+          <li><span class="check">✓</span> Free pause, up to 4 days/month</li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost">Subscribe</a>
+      </div>
+
+      <div class="plan-card featured reveal">
+        <div class="badge">Most popular</div>
+        <div class="plan-tag">For the fitness-focused</div>
+        <h3>Protein Plan</h3>
+        <div class="price-row"><span class="price-num">₹8,500</span><span class="price-cycle">/ month</span></div>
+        <div class="price-per">≈ ₹386 per meal</div>
+        <ul class="plan-feat">
+          <li><span class="check">✓</span> 22 high-protein lunches (30g+ each)</li>
+          <li><span class="check">✓</span> Veg &amp; non-veg protein sources</li>
+          <li><span class="check">✓</span> Macro breakdown with every meal</li>
+          <li><span class="check">✓</span> Free pause, up to 4 days/month</li>
+        </ul>
+        <a href="#contact" class="btn btn-primary">Subscribe</a>
+      </div>
+
+      <div class="plan-card reveal">
+        <div class="plan-tag">For non-veg lovers</div>
+        <h3>Non-Veg Plan</h3>
+        <div class="price-row"><span class="price-num">₹7,500</span><span class="price-cycle">/ month</span></div>
+        <div class="price-per">≈ ₹341 per meal</div>
+        <ul class="plan-feat">
+          <li><span class="check">✓</span> 22 lunches a month, weekdays</li>
+          <li><span class="check">✓</span> Chicken, egg &amp; seafood rotation</li>
+          <li><span class="check">✓</span> Cooked in &lt;5g oil per meal</li>
+          <li><span class="check">✓</span> Free pause, up to 4 days/month</li>
+        </ul>
+        <a href="#contact" class="btn btn-ghost">Subscribe</a>
+      </div>
+    </div>
+
+    <div class="trial-banner reveal">
+      <div class="trial-text">
+        <h3>New here? Taste it before you commit.</h3>
+        <p>One trial meal, delivered to your desk — <span class="trial-price">₹250</span>, no subscription required.</p>
+      </div>
+      <a href="#contact" class="btn btn-dark">Order trial meal</a>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="delivery" style="padding-top:0;">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">Delivery schedule</p>
+      <h2>We show up on time, every time.</h2>
+    </div>
+    <div class="delivery-grid">
+      <div class="time-card reveal">
+        <div class="time-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#E8873D" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l4 2"/></svg></div>
+        <div>
+          <div class="time-label">Lunch delivery</div>
+          <div class="time-range">11:00 AM – 1:00 PM</div>
+        </div>
+      </div>
+      <div class="time-card reveal">
+        <div class="time-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#1F4D3A" stroke-width="1.8"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z"/></svg></div>
+        <div>
+          <div class="time-label">Dinner delivery</div>
+          <div class="time-range">6:00 PM – 9:00 PM</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section pack">
+  <div class="wrap">
+    <div class="pack-copy reveal">
+      <p class="eyebrow">Packaging, done differently</p>
+      <h2>Hot food shouldn't live in plastic.</h2>
+      <p>Most delivery meals sit in single-use plastic containers — trapping heat and moisture in a way that affects both taste and health. We package every Tiffn meal in food-safe, sustainable containers built to keep food fresher, for you and the planet.</p>
+      <div class="pack-compare">
+        <div class="compare-row bad"><span class="dot-x">✕</span> Hot food sealed in plastic containers</div>
+        <div class="compare-row good"><span class="dot-check">✓</span> Food-safe, breathable, eco-friendly packaging</div>
+        <div class="compare-row bad"><span class="dot-x">✕</span> Reheated or previous-day batches</div>
+        <div class="compare-row good"><span class="dot-check">✓</span> Cooked fresh the same morning</div>
+      </div>
+    </div>
+    <div class="pack-visual reveal">
+      <svg viewBox="0 0 380 380">
+        <circle cx="190" cy="190" r="170" fill="#1F4D3A" opacity="0"/>
+        <rect x="60" y="140" width="260" height="150" rx="26" fill="#FAF6EE" opacity="0.06"/>
+        <rect x="90" y="120" width="200" height="140" rx="22" fill="#E8873D"/>
+        <rect x="90" y="115" width="200" height="20" rx="10" fill="#C96A24"/>
+        <path d="M120 120 Q190 80 260 120" stroke="#FAF6EE" stroke-width="5" fill="none" stroke-linecap="round" opacity="0.4"/>
+        <g opacity="0.85">
+          <path d="M150 165 Q145 150 155 138" stroke="#FAF6EE" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <path d="M190 165 Q185 150 195 138" stroke="#FAF6EE" stroke-width="4" stroke-linecap="round" fill="none"/>
+          <path d="M230 165 Q225 150 235 138" stroke="#FAF6EE" stroke-width="4" stroke-linecap="round" fill="none"/>
+        </g>
+        <circle cx="190" cy="205" r="46" fill="#FAF6EE" opacity="0.9"/>
+        <path d="M170 205a20 20 0 1 1 40 0a20 20 0 1 1 -40 0Z" fill="#8FA792"/>
+        <rect x="110" y="250" width="160" height="10" rx="5" fill="#FAF6EE" opacity="0.3"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="testimonials">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <p class="eyebrow">What subscribers say</p>
+      <h2>Trusted by desks across the city.</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="quote">"I used to skip lunch or order something greasy. Now it just arrives — light, home-style, and I'm not sluggish by 3pm."</p>
+        <div class="testi-person">
+          <div class="avatar" style="background:#1F4D3A;">A</div>
+          <div class="who"><b>Aditi Rao</b><span>Marketing Manager, BKC</span></div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="quote">"The Protein plan changed my gym routine. Macros printed on the box, no guesswork, and it actually tastes good."</p>
+        <div class="testi-person">
+          <div class="avatar" style="background:#E8873D;">R</div>
+          <div class="who"><b>Rohan Mehta</b><span>Software Engineer, Powai</span></div>
+        </div>
+      </div>
+      <div class="testi-card reveal">
+        <div class="stars">★★★★★</div>
+        <p class="quote">"Packaging alone won me over — no soggy plastic boxes. Pausing when I travel takes ten seconds in the app."</p>
+        <div class="testi-person">
+          <div class="avatar" style="background:#B75B39;">S</div>
+          <div class="who"><b>Sana Iyer</b><span>HR Lead, Lower Parel</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="faq" style="background:var(--ivory-2);">
+  <div class="wrap">
+    <div class="section-head center reveal" style="margin-left:auto;margin-right:auto;">
+      <p class="eyebrow" style="justify-content:center;">FAQ</p>
+      <h2>Good to know before you subscribe.</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item open">
+        <button class="faq-q"><span>Can I pause my subscription while travelling?</span><span class="plus">+</span></button>
+        <div class="faq-a"><p>Yes — every plan includes up to 4 free pause days a month. Pause from your account before 9pm the night prior and that day won't be billed.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span>How is the trial meal different from a subscription?</span><span class="plus">+</span></button>
+        <div class="faq-a"><p>The ₹250 trial is a single one-off meal with no commitment, so you can taste the food and packaging before choosing a monthly plan.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span>Do you deliver on weekends?</span><span class="plus">+</span></button>
+        <div class="faq-a"><p>Plans are built around working days, Monday to Friday. Weekend delivery is available as an add-on in select areas — ask us on WhatsApp.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span>What if I have allergies or dietary restrictions?</span><span class="plus">+</span></button>
+        <div class="faq-a"><p>Let us know at signup. Our menu team can flag or swap ingredients like nuts, dairy or gluten wherever possible.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span>Can I switch between Veg, Non-Veg and Protein plans?</span><span class="plus">+</span></button>
+        <div class="faq-a"><p>Yes, anytime. Switch from your account and the new plan applies from your next billing cycle, or immediately if you'd prefer to upgrade.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q"><span>Is the packaging really reusable or recyclable?</span><span class="plus">+</span></button>
+        <div class="faq-a"><p>Our containers are food-safe and designed to be recyclable or compostable, and are built to keep hot food fresher than standard plastic.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="section contact" id="contact">
+  <div class="wrap">
+    <div class="contact-cards">
+      <div class="reveal" style="margin-bottom:8px;">
+        <p class="eyebrow">Get in touch</p>
+        <h2 style="margin-bottom:14px;">Questions? We reply fast.</h2>
+        <p style="max-width:420px;">Reach us on WhatsApp for the quickest response, or call us directly during working hours, 9am–8pm.</p>
+      </div>
+      <a href="https://wa.me/919999999999" class="contact-card reveal">
+        <div class="cico wa-ico"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm5.6 14.3c-.2.6-1.4 1.2-1.9 1.3-.5.1-1.1.2-3.5-.8-2.9-1.2-4.8-4.1-5-4.3-.1-.2-1.2-1.6-1.2-3s.8-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .5-.1.7.5.3.7.9 2.4 1 2.6.1.2.1.4 0 .6-.2.4-.4.6-.7 1-.3.3-.6.6-.3 1.1.4.7 1.1 1.6 2.1 2.4 1.2 1 2.1 1.3 2.5 1.4.3.1.5.1.7-.1.2-.3.7-.9 1-1.2.3-.3.5-.2.8-.1.3.1 2 1 2.4 1.1.4.2.6.3.7.4.1.3.1.7-.1 1.3Z"/></svg></div>
+        <div><b>Chat on WhatsApp</b><span>+91 99999 99999 · fastest response</span></div>
+      </a>
+      <a href="tel:+912212345678" class="contact-card reveal">
+        <div class="cico ph-ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .3 2 .6 2.9a2 2 0 0 1-.5 2.1L8 9.9a16 16 0 0 0 6 6l1.2-1.2a2 2 0 0 1 2.1-.5c.9.3 1.9.5 2.9.6a2 2 0 0 1 1.8 2Z"/></svg></div>
+        <div><b>Call the kitchen desk</b><span>+91 22 1234 5678 · 9am – 8pm</span></div>
+      </a>
+    </div>
+
+    <form class="contact-form reveal" onsubmit="event.preventDefault(); this.querySelector('.btn').textContent='Thanks — we\\'ll reach out shortly';">
+      <div class="form-row"><label for="name">Full name</label><input id="name" type="text" placeholder="Your name" required></div>
+      <div class="form-row"><label for="office">Office area</label><input id="office" type="text" placeholder="e.g. BKC, Powai, Lower Parel"></div>
+      <div class="form-row"><label for="msg">Message</label><textarea id="msg" rows="4" placeholder="Tell us which plan you're interested in"></textarea></div>
+      <button class="btn btn-primary" type="submit">Request a callback</button>
+    </form>
+  </div>
+</section>
+</main>
+
+
+<footer>
+  <div class="wrap">
+    <div class="foot-top">
+      <div class="foot-brand">
+        <div class="logo">
+          <svg width="30" height="30" viewBox="0 0 40 40" fill="none">
+            <rect x="9" y="20" width="22" height="12" rx="4" fill="#FAF6EE"/>
+            <rect x="11" y="13" width="18" height="9" rx="3.5" fill="#E8873D"/>
+            <rect x="13" y="7" width="14" height="8" rx="3" fill="#FAF6EE" opacity="0.7"/>
+            <rect x="18" y="3" width="4" height="5" rx="1.5" fill="#8FA792"/>
+          </svg>
+          <span class="logo-word" style="color:#FAF6EE;">Tiffn<span class="dot">.</span></span>
+        </div>
+        <p>Subscription tiffin meals for office employees — freshly cooked, low-oil, delivered on time.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Explore</h4>
+        <a href="#usp">Why Tiffn</a>
+        <a href="#plans">Plans &amp; pricing</a>
+        <a href="#how">How it works</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <div class="foot-col">
+        <h4>Company</h4>
+        <a href="#">About us</a>
+        <a href="#">Our kitchens</a>
+        <a href="#">Careers</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <div class="foot-col">
+        <h4>Legal</h4>
+        <a href="#">Terms of service</a>
+        <a href="#">Privacy policy</a>
+        <a href="#">Refund policy</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Tiffn. All rights reserved.</span>
+      <div class="socials">
+        <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="#FAF6EE" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg></a>
+        <a href="#" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="#FAF6EE"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3zM9 9h3.8v1.7h.05c.53-1 1.83-2.05 3.77-2.05 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.6c0-1.34-.02-3.06-1.87-3.06-1.87 0-2.16 1.46-2.16 2.96V21H9z"/></svg></a>
+        <a href="#" aria-label="Twitter"><svg viewBox="0 0 24 24" fill="#FAF6EE"><path d="M22 5.9c-.7.3-1.5.6-2.3.7.8-.5 1.5-1.3 1.8-2.3-.8.5-1.7.8-2.6 1a4.1 4.1 0 0 0-7 3.7A11.6 11.6 0 0 1 3.4 4.6a4.1 4.1 0 0 0 1.3 5.5c-.7 0-1.3-.2-1.9-.5v.1c0 2 1.4 3.6 3.3 4a4.1 4.1 0 0 1-1.9.1c.5 1.6 2 2.8 3.8 2.9A8.3 8.3 0 0 1 2 18.6a11.6 11.6 0 0 0 6.3 1.9c7.5 0 11.7-6.3 11.7-11.7v-.5c.8-.6 1.5-1.3 2-2.1Z"/></svg></a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/919999999999" class="wa-float" aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" fill="#FFF"><path d="M12 2a10 10 0 0 0-8.6 15L2 22l5.2-1.4A10 10 0 1 0 12 2Zm5.6 14.3c-.2.6-1.4 1.2-1.9 1.3-.5.1-1.1.2-3.5-.8-2.9-1.2-4.8-4.1-5-4.3-.1-.2-1.2-1.6-1.2-3s.8-2.1 1-2.4c.3-.3.6-.3.8-.3h.6c.2 0 .5-.1.7.5.3.7.9 2.4 1 2.6.1.2.1.4 0 .6-.2.4-.4.6-.7 1-.3.3-.6.6-.3 1.1.4.7 1.1 1.6 2.1 2.4 1.2 1 2.1 1.3 2.5 1.4.3.1.5.1.7-.1.2-.3.7-.9 1-1.2.3-.3.5-.2.8-.1.3.1 2 1 2.4 1.1.4.2.6.3.7.4.1.3.1.7-.1 1.3Z"/></svg>
+</a>
+
+<script>
+// sticky header shadow
+const header = document.getElementById('siteHeader');
+window.addEventListener('scroll', () => {
+  header.classList.toggle('scrolled', window.scrollY > 10);
+});
+
+// mobile menu
+const burger = document.getElementById('burgerBtn');
+const mobileMenu = document.getElementById('mobileMenu');
+burger.addEventListener('click', () => {
+  const open = mobileMenu.classList.toggle('open');
+  burger.setAttribute('aria-expanded', open);
+});
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  mobileMenu.classList.remove('open');
+  burger.setAttribute('aria-expanded', false);
+}));
+
+// scroll reveal
+const revealEls = document.querySelectorAll('.reveal');
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+}, { threshold: 0.12 });
+revealEls.forEach(el => io.observe(el));
+
+// faq accordion
+document.querySelectorAll('.faq-item').forEach(item => {
+  item.querySelector('.faq-q').addEventListener('click', () => {
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item.open').forEach(i => i.classList.remove('open'));
+    if (!wasOpen) item.classList.add('open');
+  });
+});
+</script>
+</body>
+</html>
